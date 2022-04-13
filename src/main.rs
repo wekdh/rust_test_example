@@ -41,6 +41,8 @@ async fn main() -> std::io::Result<()> {
             .data(AppState { service_container })
             .route("/hello", web::get().to(controller::index))
             .route("/get/{id}", web::get().to(controller::get))
+            .route("/get/name/{name}", web::get().to(controller::get_by_name))
+            
     })
     .bind("0.0.0.0:8090")?
     .run()

@@ -22,4 +22,11 @@ impl UserService {
 
         self.collection.find_one( bson::doc! {"_id": ObjectId::parse_str(id).expect("id is not valid ObjectID") } , None )
     }
+
+    pub fn get_by_name(&self, name:&str) -> Result<Option<bson::Document>, Error> {
+
+        let find_options = mongodb::options::FindOneOptions::builder().projection(bson::doc!{"_id":0, "name":1, "age":1}).build();
+
+        self.collection.find_one( bson::doc! {"name": name } , find_options )
+    }
 }
