@@ -25,9 +25,9 @@ async fn main() -> std::io::Result<()> {
     let client_options =
         mongodb::options::ClientOptions::parse("mongodb://localhost:27017").unwrap();
     let client = mongodb::sync::Client::with_options(client_options).unwrap();
-    let db = client.database("nft");
+    let db = client.database("rust_test");
 
-    let user_collection = db.collection("nft_meta");
+    let user_collection = db.collection("person");
 
     env_logger::init_from_env(Env::default().default_filter_or("info"));
 
