@@ -1,4 +1,4 @@
-use mongodb::{error::Error, results::InsertOneResult, sync::Collection};
+use mongodb::{error::Error, results::InsertOneResult, results::UpdateResult, sync::Collection};
 
 use bson::oid::ObjectId;
 
@@ -28,5 +28,12 @@ impl UserService {
         let find_options = mongodb::options::FindOneOptions::builder().projection(bson::doc!{"_id":0, "name":1, "age":1}).build();
 
         self.collection.find_one( bson::doc! {"name": name } , find_options )
+    }
+
+    pub fn update_age(&self, name:&str, age:&str) -> Result<UpdateResult, Error> {
+
+        let update_options = mongodb::options::UpdateOptions::builder().upsert(false).build();
+
+        self.collection.update_one( bson::doc! {"name": name } , bson::doc!  {"$set":{"age":age}}, update_options )
     }
 }

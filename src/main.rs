@@ -39,9 +39,10 @@ async fn main() -> std::io::Result<()> {
             .wrap(Logger::default())
             .wrap(Logger::new("%a %{User-Agent}i"))
             .data(AppState { service_container })
-            .route("/hello", web::get().to(controller::index))
+            .route("/create", web::get().to(controller::create))
             .route("/get/{id}", web::get().to(controller::get))
             .route("/get/name/{name}", web::get().to(controller::get_by_name))
+            .route("/update", web::get().to(controller::update_age))
             
     })
     .bind("0.0.0.0:8090")?
