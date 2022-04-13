@@ -22,7 +22,18 @@ pub async fn get(app_data: web::Data<crate::AppState>, id: web::Path<String>) ->
     match result {
         Ok(result) => HttpResponse::Ok().json(result),
         Err(e) => {
-            println!("Error while getting, {:?}", e);
+            println!("get Error, {:?}", e);
+            HttpResponse::InternalServerError().finish()
+        }
+    }
+}
+
+pub async fn get_by_name(app_data: web::Data<crate::AppState>, name: web::Path<String>) -> impl Responder {
+    let result = web::block(move || app_data.service_container.user.get_by_name(&name)).await;
+    match result {
+        Ok(result) => HttpResponse::Ok().json(result),
+        Err(e) => {
+            println!("get_by_name Error, {:?}", e);
             HttpResponse::InternalServerError().finish()
         }
     }
